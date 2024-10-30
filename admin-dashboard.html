@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#service-overview">Service Overview</a></li>
+                <li><a href="#manage-services">Manage Services</a></li>
+                <li><a href="logout.html">Sign Out</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="service-overview">
+        <h2>Service Overview</h2>
+        <label for="filter-period">View Services from:</label>
+        <input type="date" id="filter-period-start">
+        <label for="filter-period-end">to</label>
+        <input type="date" id="filter-period-end">
+        <button onclick="filterServices()">Filter</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic data populated from back-end -->
+                <tr>
+                    <td>John Doe</td>
+                    <td>Regular Interior Cleaning</td>
+                    <td>October 15, 2024</td>
+                    <td>Completed</td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>Major Interior Cleaning</td>
+                    <td>October 25, 2024</td>
+                    <td>Scheduled</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 [Service Company]. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function filterServices() {
+            // Implement the filtering functionality by querying back-end API and updating the table
+        }
+    </script>
+</body>
+</html>

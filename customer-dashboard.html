@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#services-overview">My Services</a></li>
+                <li><a href="#bills-receipts">Bills & Receipts</a></li>
+                <li><a href="logout.html">Sign Out</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="services-overview">
+        <h2>My Services</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Next Service Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic data populated from back-end (example below) -->
+                <tr>
+                    <td>Regular Interior Cleaning</td>
+                    <td>October 15, 2024</td>
+                    <td>Completed</td>
+                    <td>November 15, 2024</td>
+                </tr>
+                <tr>
+                    <td>Major Interior Cleaning</td>
+                    <td>October 25, 2024</td>
+                    <td>Scheduled</td>
+                    <td>N/A</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="bills-receipts">
+        <h2>Bills & Receipts</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Bill ID</th>
+                    <th>Date Issued</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Download Receipt</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic data populated from back-end -->
+                <tr>
+                    <td>#1001</td>
+                    <td>October 16, 2024</td>
+                    <td>$100</td>
+                    <td>Paid</td>
+                    <td><a href="receipt_1001.pdf" download>Download</a></td>
+                </tr>
+                <tr>
+                    <td>#1002</td>
+                    <td>October 26, 2024</td>
+                    <td>$150</td>
+                    <td>Pending</td>
+                    <td>N/A</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 [Service Company]. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="account-script.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="edit-account">
+            <h2>Edit Account</h2>
+            <form id="edit-account-form">
+                <input type="text" name="firstName" placeholder="First Name" required>
+                <input type="text" name="lastName" placeholder="Last Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirm-password" placeholder="Confirm Password" required>
+                <button type="submit">Save Changes</button>
+            </form>
+        </section>
+        <section id="delete-account">
+            <h2>Delete Account</h2>
+            <p>Enter your password to delete your account</p>
+            <form id="delete-account-form">
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Delete Account</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+    </footer>
+</body>
+</html>

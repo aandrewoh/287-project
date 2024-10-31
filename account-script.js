@@ -1,42 +1,59 @@
-/*
-* To do:
-* 2. Delete account
-*/
-
 const demoUsers = JSON.parse(localStorage.getItem('demoUsers')) || [];
+const adminUsers = JSON.parse(localStorage.getItem('adminUsers')) || []; // filled out hard coded
+
+// create default admin
+if (adminUsers.length === 0) {
+    adminUsers.push({
+        firstName: 'Admin',
+        lastName: 'Admin',
+        email: 'admin@a.com',
+        password: 'admin'
+    });
+    localStorage.setItem('adminUsers', JSON.stringify(adminUsers));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const registrationForm = document.getElementById('registration-form');
     const loginForm = document.getElementById('login-form');
     const editAccountForm = document.getElementById('edit-account-form');
     const deleteAccountForm = document.getElementById('delete-account-form');
     const userToken = sessionStorage.getItem('userToken');
+    const adminToken = sessionStorage.getItem('adminToken');
     const navList = document.querySelector('nav ul');
     const heroSection = document.getElementById('hero');
 
+    // if logged in
     if (userToken) {
         const myAccountLink = document.createElement('li');
-        myAccountLink.innerHTML = '<a href="my-account.html">My Account</a>';
+        // redirect to admin dashboard if admin
+        if (adminToken) {
+            myAccountLink.innerHTML = '<a href="admin-dashboard.html">My Account</a>';
+        }
+        // redirect to customer dashboard if customer
+        else {
+            myAccountLink.innerHTML = '<a href="customer-dashboard.html">My Account</a>';
+        }
         navList.appendChild(myAccountLink);
 
+        // remove sign-in link
         const signInLink = document.querySelector('nav ul li a[href="sign-in.html"]');
         if (signInLink) {
             signInLink.parentElement.remove();
         }
 
+        // add sign-out link
         const signOutLink = document.createElement('li');
         signOutLink.innerHTML = '<a href="#" id="sign-out">Sign Out</a>';
         navList.appendChild(signOutLink);
         signOutLink.addEventListener('click', signOut);
-
-        // const welcomeMessage = document.createElement('p');
-        // welcomeMessage.textContent = 'Welcome back!';
-        // heroSection.appendChild(welcomeMessage);
     } else {
+        // logged out, add sign-in link
         const signInLink = document.createElement('li');
         signInLink.innerHTML = '<a href="sign-in.html">Sign In</a>';
         navList.appendChild(signInLink);
     }
 
+    // event handling
     if (registrationForm) {
         registrationForm.addEventListener('submit', handleRegistration);
     }
@@ -50,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteAccountForm.addEventListener('submit', handleDeleteAccount);
     }
 
+    // debug function
     function logDemoUsers() {
         console.log('demoUsers:', demoUsers);
     }
@@ -98,21 +116,20 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('An account with this email already exists');
             return;
         }
-        
         demoUsers.push({
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
             password: data.password
         });
+        // save to local storage
         localStorage.setItem('demoUsers', JSON.stringify(demoUsers));
-
         registrationForm.reset();
-
         alert('Account created successfully');
+        // redirect to sign-in page
         window.location.href = 'sign-in.html';
 
-        /*
+        /* to be implemented
         fetch('https://placeholder.com/api/create-account', {
             method: 'POST',
             headers: {
@@ -147,11 +164,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function signIn(data) {
+        // search for user
         const user = demoUsers.find(
             user => user.email === data.email && 
             user.password === data.password
         );
-        if (user) {
+        // check if user is admin
+        const admin = adminUsers.find(
+            admin => admin.email === data.email && 
+            admin.password === data.password
+        );
+        
+        if (user && !admin) {
             alert('Signed in successfully');
             sessionStorage.setItem('userToken', user.email);
         } else {
@@ -159,9 +183,20 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Sign-in failed: Invalid email or password', data);
             console.log('demoUsers:', demoUsers);
         }
+
+        if (admin) {
+            alert('Signed in successfully as admin');
+            sessionStorage.setItem('userToken', admin.email);
+            sessionStorage.setItem('adminToken', admin.email);
+        } else {
+            alert('Sign-in failed: Invalid email or password');
+            console.log('Sign-in failed: Invalid email or password', data);
+            console.log('adminUsers:', adminUsers);
+        }
+
         window.location.href = 'index.html';
         
-        /*
+        /* to be implemented
         fetch('https://placeholder.com/api/sign-in', {
             method: 'POST',
             headers: {
@@ -215,14 +250,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 email: data.email,
                 password: data.password
             };
-
             localStorage.setItem('demoUsers', JSON.stringify(demoUsers));
             alert('Your account is now changed');
+            document.getElementById('edit-account-form').reset();
         } else {
             alert('Failed to edit');
         }
 
-        // fetch('https://placeholder.com/api/edit-account', {
+        // to be implemented 
+        //fetch('https://placeholder.com/api/edit-account', {
         //     method: 'PUT',
         //     headers: {
         //         'Content-Type': 'application/json',
@@ -272,7 +308,8 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Account deletion failed: Account not found or incorrect password');
         }
     }
-    //     fetch('https://placeholder.com/api/delete-account', {
+    // to be implemented
+    // fetch('https://placeholder.com/api/delete-account', {
     //         method: 'DELETE',
     //         headers: {
     //             'Content-Type': 'application/json',
@@ -292,5 +329,4 @@ document.addEventListener('DOMContentLoaded', () => {
     //         console.error('Error deleting account:', error);
     //         alert('An error occurred while deleting the account');
     //     });
-    // }
 });

@@ -296,7 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function deleteAccount(password) {
-        const userToken = sessionStorage.getItem('userToken');
         const userIndex = demoUsers.findIndex(user => user.password === password);
 
         if (userIndex !== -1) {

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Celestial Oasis Spa</title>
+    <link rel="stylesheet" href="style1.css">
+    <script src="account-script.js" defer></script>
+
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="logo icon.png" width="125px" alt="Celestial Oasis Spa Logo">
+        </div>
+        <nav>
+            <ul class="left-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="home.html#contact-us">Contact</a></li>
+            </ul>
+            <ul class="right-links">
+                <li><a href="serviceRequest.html" class="request-button">Request a Service</a></li>
+                <!-- <li><a href="customer-dashboard.html">Account</a></li> -->
+            </ul>
+        </nav>
+    </div>
+
+
+
+        <h3>Admin Actions</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        
+                        <button class="yellow-button"onclick="location.href='create-service.html'">Create a new Service </button>
+                        <button class="yellow-button"onclick="location.href='edit-services2.html'">Edit a Service</button>
+                        <button class="edit-services-button"onclick="location.href='delete-service.html'">Remove a Service</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        function filterServices() {
+            // Implement the filtering functionality by querying back-end API and updating the table
+        }
+    </script>
+</body>
+</html>

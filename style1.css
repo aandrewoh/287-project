@@ -1,0 +1,274 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #D7BA89;
+    scroll-behavior: smooth;
+    border-radius: 10px;
+}
+
+h2{
+    justify-content: center;
+    display: flex;
+    margin-top: 50px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #000918;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.left-links,
+.right-links {
+    display: flex;
+    gap: 110px;
+}
+
+.left-links{
+    margin-left: 50px;
+}
+
+.right-links {
+    margin-right: 50px; 
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 40px;
+}
+
+nav ul li {
+    font-size: 30px;
+}
+
+a {
+    text-decoration: none;
+    color: #ccc2b1;
+}
+
+u {
+    color: #071192;
+    text-decoration: none;
+}
+
+u:hover{
+    text-decoration: underline;
+}
+
+p{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+/* Form Styles */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #000918;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 70px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #eca813;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 4px;
+}
+
+form button:hover {
+    background-color: #ec8b0b;
+}
+
+/* Table Styles */
+table {
+    width: 70%;
+    margin: 10px auto;
+    border-collapse: collapse;
+    justify-content: center;
+    border-radius: 8px;
+    border: 2px solid black; 
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    background-color: white;
+    border-bottom: 2px solid black; 
+}
+
+table th {
+    background-color: #8b9eb7;
+}
+
+.request-button {
+    background-color: #eca813; 
+    color: #ffffff; 
+    padding: 12px 25px; 
+    font-size: 25px; 
+    border-radius: 10px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+
+.request-button:hover {
+    background-color: #ec8b0b; 
+    transform: scale(1.05); 
+}
+
+.cancel-button {
+    background-color: #e62424;
+    color: #ffffff;
+    padding: 4px 22px;
+    border: none;
+    font-size: 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cancel-button:hover {
+    background-color: #830404; 
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+
+.create-account-link {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    color: #071192;
+    text-decoration: none;
+    text-decoration: underline;
+}
+
+h4{
+    font-weight: thick;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.sign-in-link {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    color: #071192;
+    text-decoration: none;
+    text-decoration: underline;
+}
+
+
+.sign-in-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 18px;
+    color: #071192;
+    text-decoration: none;
+    text-decoration: underline;
+}
+
+
+.admin-signin-button {
+    display: block;
+    margin: 15px auto;
+    padding: 10px 20px;
+    background-color: #698cb9;
+    color: #ffffff;
+    border: none;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.admin-signin-button:hover {
+    background-color: #0353bb;
+}
+
+.edit-account-form{
+    color: #e62424;
+}
+
+/* Centering the main admin access section */
+#admin-access {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh; /* Centers the content vertically */
+    text-align: center;
+}
+
+/* Enlarging and styling the logo */
+.logo-center img {
+    width: 250px; /* Makes the logo bigger */
+    margin-bottom: 40px; /* Adds more space below the logo */
+}
+
+/* Styling and separating the admin buttons */
+.admin-buttons {
+    display: flex;
+    gap: 20px; /* Adjust the space between buttons as needed */
+    justify-content: center; /* Align buttons in the center */
+    padding: 20px; /* Optional padding for spacing */
+}
+
+.admin-buttons button {
+    padding: 15px 30px; /* Button padding */
+    font-size: 20px; /* Button font size */
+    background-color: #4CAF50; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded corners for buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth hover effects */
+}
+
+.admin-buttons button:hover {
+    background-color: #45a049; /* Change color on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+.yellow-button, .edit-services-button {
+    background-color: #eca813;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.yellow-button:hover, .edit-services-button:hover {
+    background-color: #ec8b0b; /* Darker shade for hover effect */
+    transform: scale(1.05); /* Slightly enlarge button when hovered */
+}

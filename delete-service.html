@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>What Service to Edit?</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="account-script.js" defer></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="logo icon.png" width="125px" alt="Celestial Oasis Spa Logo">
+        </div>
+        <nav>
+            <ul class="left-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="home.html#contact-us">Contact</a></li>
+            </ul>
+            <ul class="right-links">
+                <li><a href="serviceRequest.html" class="request-button">Request a Service</a></li>
+                <!-- <li><a href="customer-dashboard.html">Account</a></li> -->
+            </ul>
+        </nav>
+    </div>
+
+    <div class="service-container">
+        <h2>Which Service do you want to Delete?</h2>
+        <div class="info-bubble">
+            <form action="/submit-service-request" method="post">
+                <label for="services">Select Services:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="services" value="service">  Service 1 - 10$</label>
+                    <label><input type="checkbox" name="services" value="haircut">  Service 2 - 20$</label>
+                    <label><input type="checkbox" name="services" value="haircut">  Service 3 - 30$</label>
+                    <label><input type="checkbox" name="services" value="haircut">  Service 4 - 40$</label>
+                    <label><input type="checkbox" name="services" value="haircut">  Service 5 - 50$</label>
+                    <label><input type="checkbox" name="services" value="haircut">  Service 6 - 60$</label>
+                    <label><input type="checkbox" name="services" value="haircut">  Service 7 - 70$</label>
+                    <label><input type="checkbox" name="services" value="haircut">  Service 8 - 80$</label>
+                    <label><input type="checkbox" name="services" value="haircut">  Service 9 - 90$</label>
+
+
+                </div>
+    
+                <button type="submit" class="submit-button">Submit Request</button>
+            </form>
+        </div>
+    </div>
+    
+    </body>
+    </html>

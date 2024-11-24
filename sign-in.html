@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Company Name - Sign In</title>
+    <link rel="stylesheet" href="style1.css">
     <script src="account-script.js" defer></script>
 </head>
 <body>
-    <header>
+    <div class="navbar">
+        <div class="logo">
+            <img src="logo icon.png" width="125px" alt="Company Logo">
+        </div>
         <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#services">Services</a></li>
-                <li><a href="index.html#about">About Us</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
+            <ul class="left-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="home.html#contact-us">Contact</a></li>
+            </ul>
+            <ul class="right-links">
+                <li><a href="serviceRequest.html" class="request-button">Request a Service</a></li>
+                <!-- <li><a href="customer-dashboard.html">Account</a></li> -->
             </ul>
         </nav>
-    </header>
+    </div>
 
     <main>
         <section id="sign-in">
@@ -27,8 +33,9 @@
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">Sign In</button>
             </form>
-            <p>Don't have an account?</p>
-            <a href="register.html">Create an Account</a>
+            <h4>Don't have an account?</h4>
+            <a href="register.html" class="create-account-link">Create an Account</a>
+            <button class="admin-signin-button"onclick="location.href='admin-sign-in.html'">Sign In as an Admin</button>
         </section>
     </main>
 

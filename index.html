@@ -1,48 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Company</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Company Name - Home</title>
+    <link rel="stylesheet" href="style.css">
     <script src="account-script.js" defer></script>
 </head>
 <body>
-    <header>
+    <div class="navbar">
+        <div class="logo">
+            <img src="logo icon.png" width="125px" alt="Celestial Oasis Spa Logo">
+        </div>
         <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#contact">Contact</a></li>
+            <ul class="left-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="#contact-us">Contact</a></li>
+            </ul>
+            <ul class="right-links">
+                <li><a href="serviceRequest.html" class="request-button">Request a Service</a></li>
+                <!-- <li><a href="sign-in.html">Account</a></li> -->
             </ul>
         </nav>
-    </header>
+    </div>
 
-    <section id="hero">
-        <h1>Welcome to [Service Company]</h1>
-        <p>Your trusted partner for [Service Type] services</p>
-        <a href="register.html" class="btn">Get Started</a>
-    </section>
+    <div class="col-2">
+        <div class="image-container">
+            <img src="companyImage.png" alt="Welcome Image">
+            <div class="welcome-message">
+                Welcome to <br> Company Name
+                <div class="button-container">
+                    <a href="services.html">
+                        <button class="cta-button">Explore Our Services</button>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div id="contact-us" class="contact-us-home">
+        <div class="contact-info-home">
+            <h2>Contact Us</h2>
+            <div class="contact-details">
+                <p><strong>Address:</strong> Come and get relaxed. </p>
+                <p>📍 Montreal, QC</p>
+                <p>📞 +1 514-555-5555</p>
+                <p>✉️ company.name@gmail.com</p>
+            </div>
+        </div>
+    
+        <div class="contact-form-home">
+            <form action="#" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Your name" required>
+    
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Your email address" required>
+    
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="3" placeholder="Your message" required></textarea>
+    
+                <button type="submit" class="cta-button-home">Send</button>
+            </form>
+        </div>
+    </div>
+    
 
-    <section id="services">
-        <h2>Our Services</h2>
-        <div class="service-card">
-            <h3>Regular Interior Cleaning</h3>
-            <p>Keep your home or office tidy with our regular cleaning services.</p>
-        </div>
-        <div class="service-card">
-            <h3>Major Interior Cleaning</h3>
-            <p>Deep cleaning for all your interior spaces, from top to bottom.</p>
-        </div>
-        <div class="service-card">
-            <h3>Exterior Cleaning</h3>
-            <p>Get the outside of your property looking as good as the inside.</p>
-        </div>
-    </section>
 
-    <footer>
-        <p>&copy; 2024 [Service Company]. All rights reserved.</p>
-    </footer>
+
+
+
 </body>
+
+
+
+
+  
 </html>
+

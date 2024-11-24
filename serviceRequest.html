@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Company Name - Request a Service</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="account-script.js" defer></script>
+    <style>
+        #service-container {
+            display: none;
+        }
+        #login-prompt {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="logo icon.png" width="125px" alt="Company Logo">
+        </div>
+        <nav>
+            <ul class="left-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="home.html#contact-us">Contact</a></li>
+            </ul>
+            <ul class="right-links">
+                <li><a href="serviceRequest.html" class="request-button">Request a Service</a></li>
+                <!-- <li><a href="customer-dashboard.html">Account</a></li> -->
+            </ul>
+        </nav>
+    </div>
+
+    <div id ="service-container" class="service-container">
+        <h2>Request a Service</h2>
+        <div class="info-bubble">
+            <form action="/submit-service-request" method="post">
+                <label for="services">Select Services:</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="services" value="service1">  Service 1 - 10$</label>
+                    <label><input type="checkbox" name="services" value="service2">  Service 2 - 20$</label>
+                    <label><input type="checkbox" name="services" value="service3">  Service 3 - 30$</label>
+                    <label><input type="checkbox" name="services" value="service4">  Service 4 - 40$</label>
+                    <label><input type="checkbox" name="services" value="service5">  Service 5 - 50$</label>
+                    <label><input type="checkbox" name="services" value="service6">  Service 6 - 60$</label>
+                    <label><input type="checkbox" name="services" value="service7">  Service 7 - 70$</label>
+                    <label><input type="checkbox" name="services" value="service8">  Service 8 - 80$</label>
+                </div>
+    
+                <label for="date">Preferred Date:</label>
+                <input type="date" id="date" name="date" required>
+    
+                <button type="submit" class="submit-button">Submit Request</button>
+            </form>
+        </div>
+    </div>
+    <div id="login-prompt" style="display: none;">
+        <p> Please <a href="sign-in.html">log in</a> to access services.</p>
+    </div>
+    
+    </body>
+    </html>

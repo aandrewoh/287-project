@@ -1,22 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Celestial Oasis Spa</title>
+    <link rel="stylesheet" href="style1.css">
     <script src="account-script.js" defer></script>
+    <style>
+        .yellow-button, .edit-services-button {
+            background-color: #eca813;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .yellow-button:hover, .edit-services-button:hover {
+            background-color: #ec8b0b; /* Darker shade for hover effect */
+            transform: scale(1.05); /* Slightly enlarge button when hovered */
+        }
+    </style>
 </head>
 <body>
-    <header>
+    <div class="navbar">
+        <div class="logo">
+            <img src="logo icon.png" width="125px" alt="Celestial Oasis Spa Logo">
+        </div>
         <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#service-overview">Service Overview</a></li>
-                <li><a href="#manage-services">Manage Services</a></li>
+            <ul class="left-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="home.html#contact-us">Contact</a></li>
+            </ul>
+            <ul class="right-links">
+                <li><a href="serviceRequest.html" class="request-button">Request a Service</a></li>
+                <!-- <li><a href="customer-dashboard.html">Account</a></li> -->
             </ul>
         </nav>
-    </header>
+    </div>
 
     <section id="service-overview">
         <h2>Service Overview</h2>
@@ -39,23 +59,38 @@
                 <!-- Dynamic data populated from back-end -->
                 <tr>
                     <td>John Doe</td>
-                    <td>Regular Interior Cleaning</td>
+                    <td>Service 1</td>
                     <td>October 15, 2024</td>
                     <td>Completed</td>
                 </tr>
                 <tr>
                     <td>Jane Smith</td>
-                    <td>Major Interior Cleaning</td>
+                    <td>Service 3</td>
                     <td>October 25, 2024</td>
                     <td>Scheduled</td>
                 </tr>
             </tbody>
         </table>
-    </section>
 
-    <footer>
-        <p>&copy; 2024 [Service Company]. All rights reserved.</p>
-    </footer>
+        <h3>Admin Actions</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <button class="yellow-button">Change Logo</button>
+                        <button class="yellow-button" onclick="location.href='edit-address.html'">Change Address</button>
+                        <button class="yellow-button" onclick="location.href='edit-name.html'">Change Business Name</button>
+                        <button class="edit-services-button" onclick="location.href='edit-services.html'">Edit Services</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
 
     <script>
         function filterServices() {

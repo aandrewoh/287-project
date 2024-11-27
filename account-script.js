@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const response = await fetch('http://localhost:5000/register', {
+            const response = await fetch('http://localhost:3000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -47,14 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loginForm) {
         loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
+            event.preventDefault(); // sssss
             const formData = new FormData(loginForm);
             const data = {
                 email: formData.get('email'),
                 password: formData.get('password')
             };
 
-            const response = await fetch('http://localhost:5000/login', {
+            const response = await fetch('http://localhost:3000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const response = await fetch('http://localhost:5000/edit-account', {
+            const response = await fetch('http://localhost:3000/edit-account', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 password: formData.get('password')
             };
 
-            const response = await fetch('http://localhost:5000/delete-account', {
+            const response = await fetch('http://localhost:3000/delete-account', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'

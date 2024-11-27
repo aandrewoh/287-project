@@ -1,11 +1,10 @@
 const express = require('express');
 const mysql = require('mysql');
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 // ignore this stuff, cors was suggested to fix it but idk
-
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 3000;
 const adminEmails = ['admin1@email.com', 'admin2@email.com'];
 const db = mysql.createConnection({
     host: "localhost",
@@ -14,24 +13,24 @@ const db = mysql.createConnection({
     database: "myapp",
 });
 
-// app.use(bodyParser.json());
-// app.use(cors());
-
+app.use(cors());
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
 db.connect((err) => {
     if (err) {
-        console.log("Error connecting to database");
+        console.log("Error connecting to database:", err.stack);
+        return;
     } else {
-        console.log("Connected to database");
+        console.log("Connected to database: " + db.threadId);
     }
 });
 
 // copied from class example
-app.get("/register", (req, res) => {
+app.post("/register", (req, res) => {
     let { firstName, lastName, email, password } = req.body;
-    let sqlStatement = "INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)";
+    let sqlStatement = "INSERT INTO user (firstName, lastName, email, password) VALUES (?, ?, ?, ?)";
 
     let query = db.query(sqlStatement, [firstName, lastName, email, password], (err, result) => {
         if (err) {
@@ -118,6 +117,13 @@ app.delete('/delete-account', (req, res) => {
     });
 });
 
+// const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
+}).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.error(`Port ${PORT} is already in use`);
+    } else {
+        console.error('Error starting server:', err);
+    }
 });

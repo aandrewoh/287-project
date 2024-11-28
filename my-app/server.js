@@ -50,7 +50,6 @@ app.get("/", (req, res) => {
 // Get user by email
 app.get("/user/:email", (req, res) => {
     let sqlStatement = "SELECT * FROM user WHERE email = ?";
-
     db.query(sqlStatement, [req.params.email], (err, result) => {
         if (err) {
             console.log(err);
@@ -67,7 +66,6 @@ app.get("/user/:email", (req, res) => {
 app.post("/register", (req, res) => {
     let { firstName, lastName, email, password } = req.body;
     let sqlStatement = "INSERT INTO user (firstName, lastName, email, password) VALUES (?, ?, ?, ?)";
-
     let query = db.query(sqlStatement, [firstName, lastName, email, password], (err, result) => {
         if (err) {
             console.log(err);
@@ -143,7 +141,7 @@ app.delete('/delete-account', (req, res) => {
         if (err) {
             console.error('Error querying database', err);
             res.status(500).send('Error deleting account');
-        } else if (results.length > 0) {
+        } else if (results.length > 0) { // User found
             db.query(deleteQuery, [email], (err, result) => {
                 if (err) {
                     console.error('Error deleting user from database', err);

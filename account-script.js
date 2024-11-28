@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginPrompt = document.getElementById('login-prompt');
     const adminEmails = ['admin1@email.com', 'admin2@email.com'];
 
+    // check if email already exists in database by fetching user by email
+    // returns { valid: true, user } if email exists
+    // returns { valid: false, message: 'Email does not exist' } if email does not exist
     async function emailExists(email) {
         const response = await fetch(`http://localhost:3000/user/${email}`);
         if (response.ok) {
@@ -43,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // validate data
             const validation = validateAccountData(data);
             if (!validation.valid) {
                 alert(validation.message);
@@ -86,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 // check if user is admin
                 const isAdmin = adminEmails.includes(data.email);
-                const result = await response.json();
                 alert('Login successful');
                 // Set user token in session storage
                 sessionStorage.setItem('userToken', 'true');
@@ -113,16 +116,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const confirmPassword = formData.get('confirmPassword');
             const email = sessionStorage.getItem('userEmail');
 
+            // if user wants to change first name
             if (firstName) {
                 data.firstName = firstName
-            } else { // fetch first name from db
+            } else { // fetch first name from db to ensure it is always included for the REST operation
                 const response = await fetch(`http://localhost:3000/get-user?email=${email}`);
                 const user = await response.json();
                 data.firstName = user.firstName;
             };
+            
+            // if user wants to change last name
             if (lastName) {
                 data.lastName = lastName
-            } else { // fetch last name from db
+            } else { // fetch last name from db to ensure it is always included for the REST operation
                 const response = await fetch(`http://localhost:3000/get-user?email=${email}`);
                 const user = await response.json();
                 data.lastName = user.lastName;
@@ -134,27 +140,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (password !== confirmPassword) {
                     alert('Passwords do not match');
                     return;
-                } else { // fetch password from db
+                } else { // fetch password from db to ensure it is always included for the REST operation
                     const response = await fetch(`http://localhost:3000/get-user?email=${email}`);
                     const user = await response.json();
                     data.password = user.password;
                 }
             }
 
+            // if user wants to change email
             const newEmail = formData.get('email');
+            // if form is filled and the new email is different from the old email
             if (newEmail && newEmail !== email) {
+                // validate email
                 if (!validateEmail(newEmail)) {
                     alert('Invalid email address');
                     return;
-                } else {
+                } else { // set new email
                     data.email = newEmail;
-                    // sessionStorage.setItem('userEmail', newEmail);
                 }
-            } else {
+            } else { // set data.email to session storage email for REST operation
                 data.email = email;
             }
 
-            // Ensure email is always included in the data
+            // if for some reason, session storage email does not exist
             if (!data.email) {
                 alert('Email is required');
                 return;
@@ -196,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 alert('Account deleted successfully');
-                // Clear user token from session storage
+                // Clear tokens from session storage
                 sessionStorage.removeItem('userToken');
                 sessionStorage.removeItem('userEmail');
                 sessionStorage.removeItem('adminToken');
@@ -209,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // if logged in
     if (sessionStorage.getItem('userToken')) {
+        // modify what my account button does
         const myAccountLink = document.createElement('li');
         // redirect to admin dashboard if admin
         if (sessionStorage.getItem('adminToken')) {
@@ -232,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rightNavList.appendChild(signOutLink);
         signOutLink.addEventListener('click', signOut);
 
+        // show service container and hide login prompt to smoothen transitions
         if (serviceContainer) {
             serviceContainer.style.display = 'block';
         }
@@ -239,11 +249,12 @@ document.addEventListener('DOMContentLoaded', () => {
             loginPrompt.style.display = 'none';
         }
     } else {
-        // logged out, add sign-in link
+        // logged out, add sign-in link back
         const signInLink = document.createElement('li');
         signInLink.innerHTML = '<a href="sign-in.html">Sign In</a>';
         rightNavList.appendChild(signInLink);
 
+        // smoothen transitions
         if (serviceContainer) {
             serviceContainer.style.display = 'none';
         }
@@ -254,7 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function validateAccountData(data) {
         const { firstName, lastName, email, password } = data;
-    
         if (!email) {
             return { valid: false, message: 'Email is required' };
         }

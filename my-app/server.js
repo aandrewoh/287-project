@@ -2,9 +2,9 @@ const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// ignore this stuff, cors was suggested to fix it but idk
+
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const adminEmails = ['admin1@email.com', 'admin2@email.com'];
 const db = mysql.createConnection({
     host: "localhost",
@@ -27,7 +27,38 @@ db.connect((err) => {
     }
 });
 
-// copied from class example
+// Get all users
+app.get("/", (req, res) => {
+    let sqlStatement = "SELECT * FROM user";
+
+    db.query(sqlStatement, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("Error fetching users");
+        } else {
+            console.log(result);
+            res.send(result);
+        }
+    });
+});
+
+// Get user by email
+app.get("/user/:email", (req, res) => {
+    let sqlStatement = "SELECT * FROM user WHERE email = ?";
+
+    db.query(sqlStatement, [req.params.email], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("Error fetching user");
+        } else if (result.length > 0) {
+            res.status(200).json(result[0]);
+        } else {
+            res.status(404).send('User not found');
+        }
+    });
+});
+
+// Register endpoint
 app.post("/register", (req, res) => {
     let { firstName, lastName, email, password } = req.body;
     let sqlStatement = "INSERT INTO user (firstName, lastName, email, password) VALUES (?, ?, ?, ?)";
@@ -43,27 +74,10 @@ app.post("/register", (req, res) => {
     });
 });
 
-// first iteration, doesn't seem to work
-// // Registration endpoint
-// app.post('/register', async (req, res) => {
-//     const { firstName, lastName, email, password } = req.body;
-//     const query = 'INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)';
-//     db.query(query, [firstName, lastName, email, password], (err, result) => {
-//         if (err) {
-//             console.error('Error registering user', err);
-//             res.status(500).send('Error registering user');
-//         } else {
-//             console.log('User registered');
-//             res.status(201).send('User registered');
-//         }
-//     });
-// });
-
-// everything below is still my "first" iteration, doesn't follow class example so idk where its breaking
 // Login endpoint
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
-    const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
+    const query = 'SELECT * FROM user WHERE email = ? AND password = ?';
     db.query(query, [email, password], (err, results) => {
         if (err) {
             console.error('Error querying database', err);
@@ -80,13 +94,35 @@ app.post('/login', (req, res) => {
 
 app.put('/edit-account', (req, res) => {
     const { email, firstName, lastName, password } = req.body;
-    const query = 'UPDATE users SET firstName = ?, lastName = ?, password = ? WHERE email = ?';
-    db.query(query, [firstName, lastName, password, email], (err, result) => {
+    const fieldsToUpdate = [];
+    const values = [];
+
+    if (firstName) {
+        fieldsToUpdate.push('firstName = ?');
+        values.push(firstName);
+    }
+    if (lastName) {
+        fieldsToUpdate.push('lastName = ?');
+        values.push(lastName);
+    }
+    if (password) {
+        fieldsToUpdate.push('password = ?');
+        values.push(password);
+    }
+    values.push(email);
+
+    if (fieldsToUpdate.length === 0) {
+        return res.status(400).send('No fields to update');
+    }
+
+    const query = `UPDATE user SET ${fieldsToUpdate.join(', ')} WHERE email = ?`;
+    db.query(query, values, (err, result) => {
         if (err) {
             console.error('Error updating user in database', err);
             res.status(500).send('Error editing account');
         } else if (result.affectedRows > 0) {
             res.status(200).send('Account updated');
+            sessionStorage.setItem('userEmail', email);
         } else {
             res.status(404).send('User not found');
         }
@@ -95,8 +131,8 @@ app.put('/edit-account', (req, res) => {
 
 app.delete('/delete-account', (req, res) => {
     const { email, password } = req.body;
-    const selectQuery = 'SELECT * FROM users WHERE email = ? AND password = ?';
-    const deleteQuery = 'DELETE FROM users WHERE email = ?';
+    const selectQuery = 'SELECT * FROM user WHERE email = ? AND password = ?';
+    const deleteQuery = 'DELETE FROM user WHERE email = ?';
 
     db.query(selectQuery, [email, password], (err, results) => {
         if (err) {
@@ -120,10 +156,4 @@ app.delete('/delete-account', (req, res) => {
 // const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-}).on('error', (err) => {
-    if (err.code === 'EADDRINUSE') {
-        console.error(`Port ${PORT} is already in use`);
-    } else {
-        console.error('Error starting server:', err);
-    }
 });

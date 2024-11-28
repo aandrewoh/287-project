@@ -9,6 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const serviceContainer = document.getElementById('service-container');
     const loginPrompt = document.getElementById('login-prompt');
 
+    async function emailExists(email) {
+        const response = await fetch(`http://localhost:3000/user/${email}`);
+        if (response.ok) {
+            const user = await response.json()
+            return { valid: true, user };
+        }
+        return { valid: false, message: 'Email does not exist' };
+    }
+
     // Event listeners
     if (registrationForm) {
         console.log('registrationForm');
@@ -22,6 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 password: formData.get('password')
             };
             console.log(data);
+
+            // Check if email already exists
+            const emailCheck = await emailExists(data.email);
+            if (emailCheck.valid) {
+                alert('Email already exists');
+                return;
+            }
 
             const validation = validateAccountData(data);
             if (!validation.valid) {
@@ -39,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 alert('Registration successful');
+                window.location.href = 'sign-in.html';
             } else {
                 alert('Registration failed');
             }
@@ -47,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loginForm) {
         loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); // sssss
+            event.preventDefault();
             const formData = new FormData(loginForm);
             const data = {
                 email: formData.get('email'),
@@ -66,10 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Login successful');
                 // Set user token in session storage
                 sessionStorage.setItem('userToken', 'true');
+                sessionStorage.setItem('userEmail', data.email);
                 if (response.isAdmin) {
                     sessionStorage.setItem('adminToken', 'true');
                 }
-                window.location.reload();
+                window.location.href = 'index.html';
             } else {
                 alert('Login failed');
             }
@@ -80,16 +98,57 @@ document.addEventListener('DOMContentLoaded', () => {
         editAccountForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const formData = new FormData(editAccountForm);
-            const data = {
-                firstName: formData.get('firstName'),
-                lastName: formData.get('lastName'),
-                email: formData.get('email'),
-                password: formData.get('password')
-            };
+            const data = {};
+            const firstName = formData.get('firstName');
+            const lastName = formData.get('lastName');
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirmPassword');
+            const email = sessionStorage.getItem('userEmail');
 
-            const validation = validateAccountData(data);
-            if (!validation.valid) {
-                alert(validation.message);
+            if (firstName) {
+                data.firstName = firstName
+            } else { // fetch first name from db
+                const response = await fetch(`http://localhost:3000/get-user?email=${email}`);
+                const user = await response.json();
+                data.firstName = user.firstName;
+            };
+            if (lastName) {
+                data.lastName = lastName
+            } else { // fetch last name from db
+                const response = await fetch(`http://localhost:3000/get-user?email=${email}`);
+                const user = await response.json();
+                data.lastName = user.lastName;
+            }
+
+            // if pw form != confirm pw form, alert
+            // else if pw form is empty and confirm pw form is empty, skip
+            if (password || confirmPassword) {
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                } else { // fetch password from db
+                    const response = await fetch(`http://localhost:3000/get-user?email=${email}`);
+                    const user = await response.json();
+                    data.password = user.password;
+                }
+            }
+
+            const newEmail = formData.get('email');
+            if (newEmail && newEmail !== email) {
+                if (!validateEmail(newEmail)) {
+                    alert('Invalid email address');
+                    return;
+                } else {
+                    data.email = newEmail;
+                    // sessionStorage.setItem('userEmail', newEmail);
+                }
+            } else {
+                data.email = email;
+            }
+
+            // Ensure email is always included in the data
+            if (!data.email) {
+                alert('Email is required');
                 return;
             }
 
@@ -103,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 alert('Account updated');
+                window.location.reload();
             } else {
                 alert('Failed to update account');
             }
@@ -114,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             const formData = new FormData(deleteAccountForm);
             const data = {
-                email: formData.get('email'),
+                email: sessionStorage.getItem('userEmail'),
                 password: formData.get('password')
             };
 
@@ -130,8 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Account deleted successfully');
                 // Clear user token from session storage
                 sessionStorage.removeItem('userToken');
+                sessionStorage.removeItem('userEmail');
                 sessionStorage.removeItem('adminToken');
-                window.location.reload();
+                window.location.href = 'index.html';
             } else {
                 alert('Failed to delete account');
             }
@@ -185,28 +246,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function validateAccountData(data) {
         const { firstName, lastName, email, password } = data;
-
-        if (!firstName || !lastName || !email || !password) {
-            return { valid: false, message: 'All fields are required' };
+    
+        if (!email) {
+            return { valid: false, message: 'Email is required' };
         }
-
-        // validate password (add more secure validation?)
-        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if (!passwordPattern.test(data.password)) {
-            return { valid: false, message: 'Password must be at least 8 characters long and contain at least one letter and one number' };
+    
+        // validate password if provided
+        if (password) {
+            const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            if (!passwordPattern.test(password)) {
+                return { valid: false, message: 'Password must be at least 8 characters long and contain at least one letter and one number' };
+            }
         }
-
+    
         // validate email
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(data.email)) {
+        if (!validateEmail(email)) {
             return { valid: false, message: 'Invalid email address' };
         }
-
-        // ensure first and last names are capitalized properly
-        data.firstName = data.firstName.charAt(0).toUpperCase() + data.firstName.slice(1).toLowerCase();
-        data.lastName = data.lastName.charAt(0).toUpperCase() + data.lastName.slice(1).toLowerCase();
-
-        return {valid: true};
+    
+        // ensure first and last names are capitalized properly if provided
+        if (firstName) {
+            data.firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+        }
+        if (lastName) {
+            data.lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
+        }
+    
+        return { valid: true };
+    }
+    
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
     }
 
     function signOut() {

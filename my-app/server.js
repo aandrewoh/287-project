@@ -156,6 +156,11 @@ app.delete('/delete-account', (req, res) => {
     });
 });
 
+/*
+* add new endpoints here
+*/
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -1,13 +1,17 @@
+/*
+* Authors: Andrew Oh 40166897
+* Class: SOEN 287
+*/
+
 document.addEventListener('DOMContentLoaded', () => {
     const registrationForm = document.getElementById('registration-form');
     const loginForm = document.getElementById('login-form');
     const editAccountForm = document.getElementById('edit-account-form');
     const deleteAccountForm = document.getElementById('delete-account-form');
-    const userToken = sessionStorage.getItem('userToken');
-    const adminToken = sessionStorage.getItem('adminToken');
     const rightNavList = document.querySelector('nav ul.right-links');
     const serviceContainer = document.getElementById('service-container');
     const loginPrompt = document.getElementById('login-prompt');
+    const adminEmails = ['admin1@email.com', 'admin2@email.com'];
 
     async function emailExists(email) {
         const response = await fetch(`http://localhost:3000/user/${email}`);
@@ -80,14 +84,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.ok) {
+                // check if user is admin
+                const isAdmin = adminEmails.includes(data.email);
+                const result = await response.json();
                 alert('Login successful');
                 // Set user token in session storage
                 sessionStorage.setItem('userToken', 'true');
                 sessionStorage.setItem('userEmail', data.email);
-                if (response.isAdmin) {
+                if (isAdmin) {
                     sessionStorage.setItem('adminToken', 'true');
+                    console.log('adminToken ', sessionStorage.getItem('adminToken'));
                 }
-                window.location.href = 'index.html';
+                // window.location.href = 'index.html';
             } else {
                 alert('Login failed');
             }
@@ -200,10 +208,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // if logged in
-    if (userToken) {
+    if (sessionStorage.getItem('userToken')) {
         const myAccountLink = document.createElement('li');
         // redirect to admin dashboard if admin
-        if (adminToken) {
+        if (sessionStorage.getItem('adminToken')) {
             myAccountLink.innerHTML = '<a href="admin-dashboard.html">My Account</a>';
         }
         // redirect to customer dashboard if customer
@@ -282,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function signOut() {
         sessionStorage.removeItem('userToken');
-        if (adminToken) {
+        if (sessionStorage.getItem('adminToken')) {
             sessionStorage.removeItem('adminToken');
         }
         alert('Signed out successfully');

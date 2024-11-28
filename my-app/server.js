@@ -1,3 +1,8 @@
+/*
+* Authors: Andrew Oh 40166897
+* Class: SOEN 287
+*/
+
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
@@ -5,7 +10,7 @@ const cors = require('cors');
 
 const app = express();
 const PORT = 3000;
-const adminEmails = ['admin1@email.com', 'admin2@email.com'];
+
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -83,15 +88,14 @@ app.post('/login', (req, res) => {
             console.error('Error querying database', err);
             res.status(500).send('Error logging in');
         } else if (results.length > 0) {
-            const user = results[0];
-            const isAdmin = adminEmails.includes(email);
-            res.status(200).json({ message: 'Login successful', isAdmin });
+            res.status(200).json({ message: 'Login successful' });
         } else {
             res.status(401).send('Invalid credentials');
         }
     });
 });
 
+// Edit account endpoint
 app.put('/edit-account', (req, res) => {
     const { email, firstName, lastName, password } = req.body;
     const fieldsToUpdate = [];
@@ -129,6 +133,7 @@ app.put('/edit-account', (req, res) => {
     });
 });
 
+// Delete account endpoint
 app.delete('/delete-account', (req, res) => {
     const { email, password } = req.body;
     const selectQuery = 'SELECT * FROM user WHERE email = ? AND password = ?';
@@ -153,7 +158,6 @@ app.delete('/delete-account', (req, res) => {
     });
 });
 
-// const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

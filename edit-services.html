@@ -3,15 +3,64 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Celestial Oasis Spa</title>
-    <link rel="stylesheet" href="style1.css">
-    <script src="account-script.js" defer></script>
+    <title>Company Name - Edit Services</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-buttons {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Space between buttons */
+        }
 
+        .admin-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .admin-buttons button:nth-child(1) {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+
+        .admin-buttons button:nth-child(1):hover {
+            background-color: #45a049;
+        }
+
+        .admin-buttons button:nth-child(2) {
+            background-color: #f44336; /* Red */
+            color: white;
+        }
+
+        .admin-buttons button:nth-child(2):hover {
+            background-color: #d32f2f;
+        }
+
+        .edit-name, .edit-description, .edit-price {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .edit-description {
+            resize: vertical;
+            height: 60px;
+        }
+    </style>
 </head>
+
 <body>
     <div class="navbar">
         <div class="logo">
-            <img src="logo icon.png" width="125px" alt="Celestial Oasis Spa Logo">
+            <img src="logo icon.png" width="125px" alt="Company Logo">
         </div>
         <nav>
             <ul class="left-links">
@@ -21,37 +70,149 @@
             </ul>
             <ul class="right-links">
                 <li><a href="serviceRequest.html" class="request-button">Request a Service</a></li>
-                <!-- <li><a href="customer-dashboard.html">Account</a></li> -->
+                <li><a href="admin-dashboard.html">Account</a></li>
             </ul>
         </nav>
     </div>
 
-
-
-        <h3>Admin Actions</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        
-                        <button class="yellow-button"onclick="location.href='create-service.html'">Create a new Service </button>
-                        <button class="yellow-button"onclick="location.href='edit-services2.html'">Edit a Service</button>
-                        <button class="edit-services-button"onclick="location.href='delete-service.html'">Remove a Service</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    <div class="services-section">
+        <h1>Our Services</h1>
+         <div class="service-list">
+            <div class="service-item" id="service1">
+                <h2 class="service-name">Service 1</h2>
+                <p class="service-description">This is description for the service number 1.</p>
+                <hr class="price-line">
+                <h3 class="service-price">10$</h3>
+                <div class="admin-buttons">
+                    <button onclick="editService('service1')">Edit</button>
+                    <button onclick="deleteService('service1')">Delete</button>
+                </div>
+            </div>
+            <div class="service-item" id="service2">
+                <h2 class="service-name">Service 2</h2>
+                <p class="service-description">This is description for the service number 2.</p>
+                <hr class="price-line">
+                <h3 class="service-price">20$</h3>
+                <div class="admin-buttons">
+                    <button onclick="editService('service2')">Edit</button>
+                    <button onclick="deleteService('service2')">Delete</button>
+                </div>
+            </div>
+            <div class="service-item" id="service3">
+                <h2 class="service-name">Service 3</h2>
+                <p class="service-description">This is description for the service number 3.</p>
+                <hr class="price-line">
+                <h3 class="service-price">30$</h3>
+                <div class="admin-buttons">
+                    <button onclick="editService('service3')">Edit</button>
+                    <button onclick="deleteService('service3')">Delete</button>
+                </div>
+            </div>
+            <div class="service-item" id="service4">
+                <h2 class="service-name">Service 4</h2>
+                <p class="service-description">This is description for the service number 4.</p>
+                <hr class="price-line">
+                <h3 class="service-price">40$</h3>
+                <div class="admin-buttons">
+                    <button onclick="editService('service4')">Edit</button>
+                    <button onclick="deleteService('service4')">Delete</button>
+                </div>
+            </div>
+            <div class="service-item" id="service5">
+                <h2 class="service-name">Service 5</h2>
+                <p class="service-description">This is description for the service number 5.</p>
+                <hr class="price-line">
+                <h3 class="service-price">50$</h3>
+                <div class="admin-buttons">
+                    <button onclick="editService('service5')">Edit</button>
+                    <button onclick="deleteService('service5')">Delete</button>
+                </div>
+            </div>
+            <div class="service-item" id="service6">
+                <h2 class="service-name">Service 6</h2>
+                <p class="service-description">This is description for the service number 6.</p>
+                <hr class="price-line">
+                <h3 class="service-price">60$</h3>
+                <div class="admin-buttons">
+                    <button onclick="editService('service6')">Edit</button>
+                    <button onclick="deleteService('service6')">Delete</button>
+                </div>
+            </div>
+            <div class="service-item" id="service7">
+                <h2 class="service-name">Service 7</h2>
+                <p class="service-description">This is description for the service number 7.</p>
+                <hr class="price-line">
+                <h3 class="service-price">70$</h3>
+                <div class="admin-buttons">
+                    <button onclick="editService('service7')">Edit</button>
+                    <button onclick="deleteService('service7')">Delete</button>
+                </div>
+            </div>
+            <div class="service-item" id="service8">
+                <h2 class="service-name">Service 8</h2>
+                <p class="service-description">This is description for the service number 8.</p>
+                <hr class="price-line">
+                <h3 class="service-price">80$</h3>
+                <div class="admin-buttons">
+                    <button onclick="editService('service8')">Edit</button>
+                    <button onclick="deleteService('service8')">Delete</button>
+                </div>
+            </div>            
+        </div>
+    </div>
 
     <script>
-        function filterServices() {
-            // Implement the filtering functionality by querying back-end API and updating the table
+        function editService(serviceId) {
+            const serviceItem = document.getElementById(serviceId);
+            const nameElement = serviceItem.querySelector('.service-name');
+            const descriptionElement = serviceItem.querySelector('.service-description');
+            const priceElement = serviceItem.querySelector('.service-price');
+
+            // If already in edit mode, save changes
+            if (serviceItem.classList.contains('editing')) {
+                // Save changes
+                const newName = serviceItem.querySelector('.edit-name').value;
+                const newDescription = serviceItem.querySelector('.edit-description').value;
+                const newPrice = serviceItem.querySelector('.edit-price').value;
+
+                nameElement.textContent = newName;
+                descriptionElement.textContent = newDescription;
+                priceElement.textContent = `${newPrice}$`;
+
+                // Remove edit fields
+                serviceItem.classList.remove('editing');
+            } else {
+                // Convert to editable fields
+                nameElement.innerHTML = `<input type="text" class="edit-name" value="${nameElement.textContent}" />`;
+                descriptionElement.innerHTML = `<textarea class="edit-description">${descriptionElement.textContent}</textarea>`;
+                priceElement.innerHTML = `<input type="number" class="edit-price" value="${priceElement.textContent.replace('$', '')}" />`;
+
+                // Indicate edit mode
+                serviceItem.classList.add('editing');
+            }
         }
+
+        function deleteService(serviceId) {
+            const serviceItem = document.getElementById(serviceId);
+            const confirmation = confirm(`Are you sure you want to delete ${serviceId}?`);
+            if (confirmation) {
+                fetch(`/delete-service/${serviceId}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (response.ok) {
+                            serviceItem.remove(); // Remove from the DOM
+                            alert(`${serviceId} deleted successfully.`);
+                        } else {
+                            alert(`Failed to delete ${serviceId}.`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while deleting the service.');
+                    });
+            }
+        }
+
     </script>
 </body>
+
 </html>
